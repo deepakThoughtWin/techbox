@@ -10,12 +10,22 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
+
+import os
+import sys
+# import pdb; pdb.set_trace()
+PROJECT_ROOT = os.path.dirname(__file__)
+sys.path.insert(0, os.path.join(PROJECT_ROOT, 'apps'))
 from pathlib import Path
+from unipath import Path
+PROJECT_DIR = Path(__file__).ancestor(3)
+PROJECT_APPS = Path(__file__).ancestor(2)
+
+sys.path.insert(0, Path(PROJECT_APPS, 'apps'))
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
-
-
+# BASE_DIR = Path(__file__).resolve(strict=True).parent.parent.parent
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
@@ -78,7 +88,8 @@ WSGI_APPLICATION = 'thetechbox.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        # 'NAME': str(BASE_DIR / 'db.sqlite3'),
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 
