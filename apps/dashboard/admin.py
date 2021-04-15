@@ -1,5 +1,7 @@
 from django.contrib import admin
-from .models import Category,Asset
+from .models import Category,Asset,Employee,Designation
 admin.site.register(Category)
 admin.site.register(Asset)
-# Register your models here.
+admin.site.register(Employee)
+admin.site.register(Designation)
+
