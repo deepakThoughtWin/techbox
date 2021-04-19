@@ -1,7 +1,7 @@
 from django.forms.models import ModelChoiceField
 from apps.dashboard.models import Asset, Category, Designation, Employee
 from django import forms
-from searchableselect.widgets import SearchableSelect
+# from searchableselect.widgets import SearchableSelect
 
 
 class EmployeeForm(forms.ModelForm):  

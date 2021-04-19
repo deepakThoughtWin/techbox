@@ -10,11 +10,10 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 import os
 import sys
-# import pdb; pdb.set_trace()
-PROJECT_ROOT = os.path.dirname(__file__)
-# sys.path.insert(0, os.path.join(PROJECT_ROOT, 'apps'))
-# from pathlib import Path
 from unipath import Path
+
+
+PROJECT_ROOT = os.path.dirname(__file__)
 PROJECT_DIR = Path(__file__).ancestor(3)
 PROJECT_APPS = Path(__file__).ancestor(2)
 
@@ -32,9 +31,7 @@ SECRET_KEY = '8%ajc+890brxx_$cht)ql4ky^v@m98h*ha#f*z0d5!!63rm&ll'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
-
+ALLOWED_HOSTS = ["*"]
 
 # Application definition
 
@@ -46,7 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'apps.dashboard',
-    'apps.authentication'
+    # 'apps.authentication'
 ]
 
 MIDDLEWARE = [
