@@ -25,7 +25,7 @@
                                 <div class="card-header">Create Employee</div>
                                 
                                 <div class="card-body card-block">
-                                    <form action="{% url 'update_employee' employee.id %}" method="post" class="">
+                                    <form action="{% url 'dashboard:update_employee' employee.id %}" method="post" class="">
                                         
                                         {% csrf_token %}
                                         

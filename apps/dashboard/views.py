@@ -34,7 +34,7 @@ class EmployeeView(generic.ListView):
 class EmployeeDeleteView(generic.DeleteView):
     model = Employee
     Template_name = 'dshboard/employee_confirm_delete.html'
-    success_url = reverse_lazy('view_employee')
+    success_url = reverse_lazy('dashboard:view_employee')
 
 @method_decorator(login_required, name='dispatch')
 class UpdateEmployeeView(generic.UpdateView):
@@ -61,7 +61,7 @@ class CreateDesignationView(SuccessMessageMixin,generic.CreateView):
 class DesignationDeleteView(generic.DeleteView):
     model = Designation
     Template_name = 'dashboard/designaion_confirm_delete.html'
-    success_url = reverse_lazy('view_designation')
+    success_url = reverse_lazy('dashboard:view_designation')
 
 @method_decorator(login_required, name='dispatch')
 class UpdateDesignationView(generic.UpdateView):
