@@ -1,0 +1,38 @@
+{% include 'dashboard/base.html' %}
+
+<div class="content mt-3">
+    <div class="animated fadeIn">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header p-3 d-flex justify-content-between">
+                        <strong class="card-title">Designation Table</strong>
+                        <a href="{% url 'designation' %}" class="btn btn-secondary">Add Designation</a>
+                    </div>
+                    <div class="card-body">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                   
+                                    <th scope="col">Designation</th>
+                                    <th scope="col">Added On</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for designation in designation_list %}  
+                                <tr>
+                                    <td>{{designation.name}}</td>
+                                    <td>{{designation.created_on}}</td>
+                                    <td>
+                                        <a href="{% url 'update_designation' designation.id %}"><button type="button" class="btn btn-primary rounded"><i class="fa fa-edit"></i></button> </a> 
+                                        <a href="{% url 'delete_designation' designation.id%}" ><button type="button" class="btn btn-danger rounded"><i class="fa fa-trash-o"></i></button></a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                               
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>

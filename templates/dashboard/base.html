@@ -61,8 +61,9 @@
                     <li class="menu-item-has-children dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-laptop"></i>Employee</a>
                         <ul class="sub-menu children dropdown-menu">
-                            <li><i class="fa fa-puzzle-piece"></i><a href="{% url 'employee' %}">Insert Employee</a></li>
-                            <li><i class="fa fa-id-badge"></i><a href="{% url 'view_employee' %}">View Employee</a></li>
+                            
+                            <li><i class="fa fa-puzzle-piece"></i><a href="{% url 'view_employee' %}">View Employee</a></li>
+                            <li><i class="fa fa-id-badge"></i><a href="{% url 'view_designation' %}">View Designation</a></li>
                             
                         </ul>
                     </li>
@@ -70,7 +71,7 @@
                     <li class="menu-item-has-children dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-laptop"></i>Asset</a>
                         <ul class="sub-menu children dropdown-menu">
-                            <li><i class="fa fa-puzzle-piece"></i><a href="#">Create Asset</a></li>
+                            <li><i class="fa fa-puzzle-piece"></i><a href="/asset/">Create Asset</a></li>
                             <li><i class="fa fa-id-badge"></i><a href="#">View Asset</a></li>
                             
                         </ul>
@@ -430,6 +431,9 @@
     <script src="/static/vendors/jqvmap/dist/jquery.vmap.min.js"></script>
     <script src="/static/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
     <script src="/static/vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script>
+
+    
+    <script src="/static/vendors/chosen/chosen.jquery.min.js"></script>
     <script>
         (function($) {
             "use strict";
@@ -449,6 +453,15 @@
         })(jQuery);
     </script>
 
+<script>
+    jQuery(document).ready(function() {
+        jQuery(".standardSelect").chosen({
+            disable_search_threshold: 10,
+            no_results_text: "Oops, nothing found!",
+            width: "100%"
+        });
+    });
+</script>
 </body>
 
 </html>

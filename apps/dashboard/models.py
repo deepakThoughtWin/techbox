@@ -4,7 +4,6 @@ from django.contrib.auth.models import User
 class Category(models.Model):
     name = models.CharField(max_length=100)
     added_date = models.DateTimeField(auto_now_add=True)
-
     def __str__(self):
         return self.name
 
@@ -22,7 +21,7 @@ class Asset(models.Model):
 
 class Employee(models.Model):
     name = models.CharField(max_length=100)
-    email = models.EmailField(unique=True)
+    email = models.EmailField(unique=True,editable=True)
     designation = models.ForeignKey('Designation',on_delete=models.CASCADE)
     phone =models.CharField(max_length=15)
     address = models.CharField(max_length=100)
