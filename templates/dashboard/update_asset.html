@@ -22,54 +22,50 @@
 
                         <div class="col-lg-10">
                             <div class="card">
-                                <div class="card-header">Update Employee</div>
+                                <div class="card-header">Update Assets</div>
                                 
                                 <div class="card-body card-block">
-                                    <form action="{% url 'dashboard:update_employee' employee.id %}" method="post" class="">
+                                    <form action="{% url 'dashboard:update_asset' asset.id %}" method="post" >
                                         
                                         {% csrf_token %}
                                         
                                         <div class="form-group">
                                             <div class="input-group">
-                                                <div class="input-group-addon"><i class="fa fa-user"></i></div>
+                                                <div class="input-group-addon">Asset Name </div>
                                                 {{form.name}}
                                             </div>
                                         </div>
                                         <br>
                                         <div class="form-group">
                                             <div class="input-group">
-                                                <div class="input-group-addon"><i class="fa fa-unlock-alt"></i> </div>
-                                                {{ form.email}}
+                                                <div class="input-group-addon">Category </div>
+                                                {{ form.category}}
                                                 
                                             </div>
                                         </div>
                                         <br>
                                         <div class="form-group">
                                             <div class="input-group">
-                                                <div class="input-group-addon"><i class="fa fa-user"></i></div>
-                                                    {{ form.designation}}
+                                                <div class="input-group-addon">Model Number</div>
+                                                {{ form.model_number}}
                                                 
                                             </div>
                                             
-                            
-                                </div>
-                                <br>
-                                <div class="form-group">
-                                    <div class="input-group">
-                                        <div class="input-group-addon"><i class="fa fa-unlock-alt"></i> </div>
-                                        {{ form.phone}}
-                                    </div>
-                                </div>
-                                <br>
-                                <div class="form-group">
-                                    <div class="input-group">
-                                        <div class="input-group-addon"><i class="fa fa-unlock-alt"></i> </div>
-                                        {{ form.address}}
-                                    </div>
-                                </div>
-                              
-                                <p style="font-size: 13px;">
-                                    {{ form.errors }}
+                                            
+                                        </div>
+                                        <div class="form-check">
+                                            {{form.availability}}
+                                            <label class="form-check-label" for="flexCheckIndeterminate">
+                                              Available
+                                            </label>
+                                          </div>
+                                        <br>
+                                        
+                                        
+                                        
+                                        
+                                        <p style="font-size: 13px;">
+                                            {{ form.errors }}
                                 </p>
                                 
                                 <div class="form-actions form-group"><button type="submit"
@@ -86,7 +82,7 @@
     </div><!-- /#right-panel -->
     <!-- Right Panel -->
     {% endblock base %}
-
+  
     {% block footer %}
 
     {% endblock footer %}

@@ -22,29 +22,46 @@
 
                         <div class="col-lg-10">
                             <div class="card">
-                                <div class="card-header">Update Designation</div>
+                                <div class="card-header">Assign Asset</div>
                                 
                                 <div class="card-body card-block">
-                                    <form action="{% url 'dashboard:update_designation' designation.id %}" method="post" class="">
+                                    <form action="/assign_asset/" method="post" class="">
                                         
                                         {% csrf_token %}
                                         
                                         <div class="form-group">
                                             <div class="input-group">
-                                                <div class="input-group-addon"><i class="fa  fa-group (alias)"></i></div>
-                                                {{form.name}}
+                                                <div class="input-group-addon">Employee</div>
+                                                {{form.employee}}
                                             </div>
                                         </div>
-                                       
+                                        <br>
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <div class="input-group-addon">Asset </div>
+                                                {{ form.asset}}
+                                                
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <div class="input-group-addon">Expire On</div>
+                                                    {{ form.expire_on}}
+                                                
+                                            </div>
+                                            
+                            
+                                </div>
+                               
+                               
                               
                                 <p style="font-size: 13px;">
                                     {{ form.errors }}
                                 </p>
                                 
-                                <div class="form-actions form-group">
-
-                                <center> <button type="submit"
-                                        class="btn btn-success">Submit</button></center></div>
+                                <div class="form-actions form-group"><button type="submit"
+                                        class="btn btn-success ">Submit</button></div>
                                 </form>
                             </div>
                         </div>

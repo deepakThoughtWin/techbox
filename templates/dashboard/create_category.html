@@ -22,10 +22,10 @@
 
                         <div class="col-lg-10">
                             <div class="card">
-                                <div class="card-header">Update Designation</div>
+                                <div class="card-header">Create Category</div>
                                 
                                 <div class="card-body card-block">
-                                    <form action="{% url 'dashboard:update_designation' designation.id %}" method="post" class="">
+                                    <form action="/category/" method="post" class="">
                                         
                                         {% csrf_token %}
                                         

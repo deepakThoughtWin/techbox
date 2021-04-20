@@ -8,35 +8,36 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header p-3 d-flex justify-content-between">
-                        <strong class="card-title">Employee Table</strong>
-                        <a href="{% url 'dashboard:employee' %}" class="btn btn-secondary"> Add Employee</a>
+                        <strong class="card-title">Asset Table</strong>
+                        <a href="{% url 'dashboard:asset' %}" class="btn btn-secondary"> Add Asset</a>
                     </div>
                     <div class="card-body">
                         <table id="bootstrap-data-table-export" class="table table-striped table-bordered">
                             <thead>
                                 <tr>
                                     <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Designation</th>
-                                    <th>Phone</th>
-                                    <th>Address</th>
+                                    <th>Category</th>
+                                    <th>Model Number</th>
+                                    <th>Availability</th>
+                                    <th>Added Date</th>
+                                    <!-- <th>Expire On</th> -->
                                     <th>Action</th>
-                                
                                 </tr>
                             </thead>
                             <tbody>
                                 
-                                {% for employee in employee_list %}  
+                                {% for asset in asset_list %}  
                                 <tr>
-                                    <td>{{employee.name|title|slice:":30"}}</td>
-                                    <td>{{employee.email|slice:":50"}}</td>
-                                    <td>{{employee.designation}}</td>
-                                    <td>{{employee.phone}}</td>
-                                    <td>{{employee.address}}</td>
+                                    <td>{{asset.name|title}}</td>
+                                    <td>{{asset.category|title}}</td>
+                                    <td>{{asset.model_number|slice:":50"}}</td>
+                                    <td>{% if asset.availability is True %} Available {%else%} Not Available {%endif%}</td>
+                                    <td>{{asset.added_date}}</td>
+                                    <!-- <td>{{asset.expire_date}}</td> -->
 
                                     <td>
-                                        <a href="{% url 'dashboard:update_employee' employee.id %}"><button type="button" class="btn btn-primary rounded"><i class="fa fa-edit"></i></button> </a> 
-                                        <a href="{% url 'dashboard:delete_employee' employee.id%}" ><button type="button" class="btn btn-danger rounded"><i class="fa fa-trash-o"></i></button></a>
+                                        <a href="{% url 'dashboard:update_asset' asset.id %}"><button type="button" class="btn btn-primary rounded"><i class="fa fa-edit"></i></button> </a> 
+                                        <a href="{% url 'dashboard:delete_asset' asset.id %}" ><button type="button" class="btn btn-danger rounded"><i class="fa fa-trash-o"></i></button></a>
                                     </td>
                                 </tr>
                                 

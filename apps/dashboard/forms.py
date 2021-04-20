@@ -1,5 +1,5 @@
 from django.forms.models import ModelChoiceField
-from apps.dashboard.models import Asset, Category, Designation, Employee
+from apps.dashboard.models import Asset, AssignAsset, Category, Designation, Employee
 from django import forms
 # from searchableselect.widgets import SearchableSelect
 
@@ -44,12 +44,12 @@ class AssetForm(forms.ModelForm):
     class Meta:
         model = Asset
         widgets = {
-            'name' : forms.TextInput(attrs={'class':'form-control','placeholder':'Name'}),
-            'category' : forms.Select(attrs={'class':'form-control'}),
+            'name' : forms.TextInput(attrs={'class':'form-control','placeholder':'Asset Name'}),
+            'category' : forms.Select(attrs={'class':'form-control','placeholder':'Category'}),
             'model_number': forms.TextInput(attrs={'class':'form-control','placeholder':'Model Number'}),
-            'availability' : forms.TextInput(attrs={'minlength': 10, 'maxlength': 15, 'required': True, 'type': 'number','class':'form-control'}), 
-            'employee' : forms.Select(attrs={'class':'form-control'}),
-            'expire_date' : forms.TextInput(attrs={'class':'form-control','type': 'date'}),
+            'availability' : forms.CheckboxInput(attrs={'class':'form-check-input'}), 
+            # 'employee' : forms.Select(attrs={'class':'form-control'}),
+            # 'expire_date' : forms.TextInput(attrs={'class':'form-control','type': 'date'}),
        }
         fields = "__all__"
         exclude =('availability',)
@@ -57,4 +57,50 @@ class AssetForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['category'].queryset = Category.objects.all()
-        self.fields['employee'].queryset = Employee.objects.all()
+        # self.fields['employee'].queryset = Employee.objects.all()
+
+
+class AssetUpdateForm(forms.ModelForm):  
+    class Meta:
+        model = Asset
+        widgets = {
+            'name' : forms.TextInput(attrs={'class':'form-control','placeholder':'Asset Name'}),
+            'category' : forms.Select(attrs={'class':'form-control','placeholder':'Category'}),
+            'model_number': forms.TextInput(attrs={'class':'form-control','placeholder':'Model Number'}),
+            'availability' : forms.CheckboxInput(attrs={'class':'form-check-input'}), 
+            # 'employee' : forms.Select(attrs={'class':'form-control'}),
+            # 'expire_date' : forms.TextInput(attrs={'class':'form-control','type': 'date'}),
+       }
+        fields = "__all__"
+        exclude =('employee','expire_date')
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['category'].queryset = Category.objects.all()
+        
+
+
+class CategoryForm(forms.ModelForm):  
+    
+    class Meta:
+        model = Category
+        widgets = {
+            'name' : forms.TextInput(attrs={'class':'form-control','placeholder':'Category'}),  
+        }
+        fields = "__all__"
+
+
+
+class AssignAssetForm(forms.ModelForm):  
+    class Meta:
+        model = AssignAsset
+        widgets = {
+            'employee' : forms.Select(attrs={'class':'form-control'}),
+            'asset' : forms.Select(attrs={'class':'form-control','placeholder':'Category'}),
+            'expire_on' : forms.TextInput(attrs={'class':'form-control','type': 'date'}),
+       }
+        fields = "__all__"
+        def __init__(self, *args, **kwargs):
+            super().__init__(*args, **kwargs)
+            self.fields['category'].queryset = Category.objects.all()
+            self.fields['employee'].queryset = Employee.objects.all()
