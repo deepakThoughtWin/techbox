@@ -9,7 +9,8 @@ from django.contrib.messages.views import SuccessMessageMixin
 from apps.dashboard.forms import AssetForm, AssignAssetForm, EmployeeForm,DesignationForm,AssetUpdateForm,CategoryForm
 from apps.dashboard.models import Asset, AssignAsset, Category, Designation, Employee
 from django.urls import reverse_lazy
-
+from django.conf import settings
+from django.core.mail import send_mail
 
 class IndexView(generic.ListView):
     template_name = "dashboard/index.html"
@@ -27,7 +28,7 @@ class CreateEmployeeView(SuccessMessageMixin,generic.CreateView):
     form_class = EmployeeForm
     model = Employee
     template_name = "dashboard/create_employee.html"
-    success_url ="/view_employee/"
+    success_url = reverse_lazy('dashboard:view_employee')
     success_message = "Employee was Created successfully"
     # def form_valid(self, form):
     #     obj = form.save(commit=False)
@@ -43,15 +44,18 @@ class EmployeeView(generic.ListView):
 @method_decorator(login_required, name='dispatch')
 class EmployeeDeleteView(generic.DeleteView):
     model = Employee
-    Template_name = 'dshboard/employee_confirm_delete.html'
+    # template_name = 'dshboard/employee_confirm_delete.html'
     success_url = reverse_lazy('dashboard:view_employee')
+    def get(self, request, *args, **kwargs):
+        return self.delete(request, *args, **kwargs)
 
 @method_decorator(login_required, name='dispatch')
 class UpdateEmployeeView(generic.UpdateView):
     form_class = EmployeeForm
     model = Employee
     template_name = "dashboard/update_employee.html"
-    success_url ="/view_employee/"
+    success_url = reverse_lazy('dashboard:view_employee')
+
     
 @method_decorator(login_required, name='dispatch')
 class DesignationView(generic.ListView):
@@ -64,21 +68,24 @@ class CreateDesignationView(SuccessMessageMixin,generic.CreateView):
     form_class = DesignationForm
     model = Designation
     template_name = "dashboard/create_designation.html"
-    success_url ="/view_designation/"
+    success_url = reverse_lazy('dashboard:view_designation')
     success_message = "Employee was Created successfully"
 
 @method_decorator(login_required, name='dispatch')
 class DesignationDeleteView(generic.DeleteView):
     model = Designation
-    Template_name = 'dashboard/designaion_confirm_delete.html'
+    # Template_name = 'dashboard/designaion_confirm_delete.html'
     success_url = reverse_lazy('dashboard:view_designation')
+    def get(self, request, *args, **kwargs):
+        return self.delete(request, *args, **kwargs)
 
 @method_decorator(login_required, name='dispatch')
 class UpdateDesignationView(generic.UpdateView):
     form_class = DesignationForm
     model = Designation
     template_name = "dashboard/update_designation.html"
-    success_url ="/view_designation/"
+    success_url = reverse_lazy('dashboard:view_designation')
+
 
 @method_decorator(login_required, name='dispatch')
 class CreateAssetView(SuccessMessageMixin,generic.CreateView):
@@ -96,8 +103,10 @@ class AssetView(generic.ListView):
 @method_decorator(login_required, name='dispatch')
 class AssetDeleteView(generic.DeleteView):
     model = Asset
-    Template_name = 'dashboard/asset_confirm_delete.html'
+    # Template_name = 'dashboard/asset_confirm_delete.html'
     success_url = reverse_lazy('dashboard:view_asset')
+    def get(self, request, *args, **kwargs):
+        return self.delete(request, *args, **kwargs)
 
 @method_decorator(login_required, name='dispatch')
 class UpdateAssetView(generic.UpdateView):
@@ -111,7 +120,8 @@ class CreateCategoryView(generic.CreateView):
     form_class = CategoryForm
     model = Category
     template_name = "dashboard/create_category.html"
-    success_url ="/view_category/"
+    success_url = reverse_lazy('dashboard:view_category')
+
 
 @method_decorator(login_required, name='dispatch')
 class CategoryView(generic.ListView):
@@ -122,8 +132,10 @@ class CategoryView(generic.ListView):
 @method_decorator(login_required, name='dispatch')
 class CategoryDeleteView(generic.DeleteView):
     model = Category
-    Template_name = 'dashboard/category_confirm_delete.html'
+    # Template_name = 'dashboard/category_confirm_delete.html'
     success_url = reverse_lazy('dashboard:view_category')
+    def get(self, request, *args, **kwargs):
+        return self.delete(request, *args, **kwargs)
 
 @method_decorator(login_required, name='dispatch')
 class UpdateCategoryView(generic.UpdateView):
@@ -139,11 +151,23 @@ class AssignAssetView(View):
         return render(request,'dashboard/assign_asset.html',{'form':form})
 
     def post(self, request, *args, **kwargs):
-        form = AssignAssetForm(request.POST)
+        form = AssignAssetForm(request.POST or None)
         if form.is_valid():
+            email= form.cleaned_data['employee']
+            asset= form.cleaned_data['asset']
+            expire= form.cleaned_data['expire_on']
             object=form.save(commit=False)
-            object.release=False
+            employee=Employee.objects.get(email=email)
+            name=employee.name
+            print(name)
+            object.release=True
             object.save()
+            subject = 'welcome to GFG world'
+            message = f'Hi {name}, You have got {asset}. for {expire}'
+            email_from = settings.EMAIL_HOST_USER
+            recipient_list = [email, ]
+            send_mail( subject, message, email_from, recipient_list )
+
         return HttpResponseRedirect("/view_assign_asset")
     
 class ReleaseAssetView(View):

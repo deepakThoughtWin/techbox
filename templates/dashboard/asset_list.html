@@ -37,7 +37,7 @@
 
                                     <td>
                                         <a href="{% url 'dashboard:update_asset' asset.id %}"><button type="button" class="btn btn-primary rounded"><i class="fa fa-edit"></i></button> </a> 
-                                        <a href="{% url 'dashboard:delete_asset' asset.id %}" ><button type="button" class="btn btn-danger rounded"><i class="fa fa-trash-o"></i></button></a>
+                                        <a href="{% url 'dashboard:delete_asset' asset.id %}" data-toggle="modal" data-target="#exampleModal" onClick="getId('{{asset.id}}')"><button type="button" class="btn btn-danger rounded"><i class="fa fa-trash-o"></i></button></a>
                                     </td>
                                 </tr>
                                 
@@ -94,5 +94,13 @@
 <script src="/static/vendors/jqvmap/dist/jquery.vmap.min.js"></script>
 <script src="/static/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
 <script src="/static/vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script>
+
+<script>
+    function getId(id) {
+        var a =document.getElementById('delete_record');
+        // alert(id)
+        a.href = "delete_asset/delete/"+id;
+    }
+</script>
 
 {% endblock footer %}

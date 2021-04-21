@@ -96,11 +96,11 @@ class AssignAssetForm(forms.ModelForm):
         model = AssignAsset
         widgets = {
             'employee' : forms.Select(attrs={'class':'form-control'}),
-            'asset' : forms.Select(attrs={'class':'form-control','placeholder':'Category'}),
+            'asset' : forms.Select(attrs={'class':'form-control'}),
             'expire_on' : forms.TextInput(attrs={'class':'form-control','type': 'date'}),
        }
         fields = "__all__"
         def __init__(self, *args, **kwargs):
             super().__init__(*args, **kwargs)
-            self.fields['category'].queryset = Category.objects.all()
+            self.fields['asset'].queryset = Asset.objects.all()
             self.fields['employee'].queryset = Employee.objects.all()

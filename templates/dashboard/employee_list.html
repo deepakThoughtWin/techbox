@@ -26,7 +26,8 @@
                             </thead>
                             <tbody>
                                 
-                                {% for employee in employee_list %}  
+                                {% for employee in employee_list %} 
+                                
                                 <tr>
                                     <td>{{employee.name|title|slice:":30"}}</td>
                                     <td>{{employee.email|slice:":50"}}</td>
@@ -36,10 +37,10 @@
 
                                     <td>
                                         <a href="{% url 'dashboard:update_employee' employee.id %}"><button type="button" class="btn btn-primary rounded"><i class="fa fa-edit"></i></button> </a> 
-                                        <a href="{% url 'dashboard:delete_employee' employee.id%}" ><button type="button" class="btn btn-danger rounded"><i class="fa fa-trash-o"></i></button></a>
+                                        <a href="{% url 'dashboard:delete_employee' employee.id%}" data-toggle="modal" data-target="#exampleModal" onClick="getId('{{employee.id}}')"><button type="button" class="btn btn-danger rounded"><i class="fa fa-trash-o"></i></button></a>
                                     </td>
                                 </tr>
-                                
+         
                                 {% endfor %}
                             </tbody>
                         </table>
@@ -54,6 +55,9 @@
 
 
 </div><!-- /#right-panel -->
+
+
+                     
 {% endblock base %}
 
 
@@ -94,4 +98,12 @@
 <script src="/static/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
 <script src="/static/vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script>
 
+
+<script>
+    function getId(id) {
+        var a =document.getElementById('delete_record');
+        // alert(id)
+        a.href = "delete_employee/delete/"+id;
+    }
+</script>	
 {% endblock footer %}

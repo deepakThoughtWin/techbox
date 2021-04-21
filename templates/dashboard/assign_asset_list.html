@@ -32,7 +32,9 @@
                                     <td>{{assign.assign_on}}</td>
                                     <td>{{assign.expire_on}}</td>
                                     <td>
-                                        <a href="{% url 'dashboard:release_asset' assign.id %}" ><button type="button" class="btn btn-danger rounded">Release</button></a>
+                                        <a href="{% url 'dashboard:release_asset' assign.id %}"
+                                        data-toggle="modal" data-target="#exampleModal1" onClick="getId('{{assign.id}}')" ><button type="button" class="btn btn-danger rounded">Release</button></a>
+                                        
                                     </td>
                                 </tr>
                                 
@@ -42,16 +44,12 @@
                     </div>
                 </div>
             </div>
-
-
         </div>
     </div><!-- .animated -->
 </div><!-- .content -->
 
-
+{%endblock base%}
 </div><!-- /#right-panel -->
-{% endblock base %}
-
 
 
 {% block footer %}
@@ -90,4 +88,12 @@
 <script src="/static/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
 <script src="/static/vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script>
 
+
+<script>
+  function getId(id) {
+      var a =document.getElementById('release_record');
+      // alert(id)
+      a.href = "release_asset/"+id;
+  }
+</script>
 {% endblock footer %}
