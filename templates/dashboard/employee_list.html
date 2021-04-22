@@ -29,7 +29,7 @@
                                 {% for employee in employee_list %} 
                                 
                                 <tr>
-                                    <td>{{employee.name|title|slice:":30"}}</td>
+                                    <td><a href="{% url 'dashboard:asset_borrow' employee.id %}" class='btn btn-info'>{{employee.name|title|slice:":30"}}</a></td>
                                     <td>{{employee.email|slice:":50"}}</td>
                                     <td>{{employee.designation}}</td>
                                     <td>{{employee.phone}}</td>

@@ -102,5 +102,6 @@ class AssignAssetForm(forms.ModelForm):
         fields = "__all__"
         def __init__(self, *args, **kwargs):
             super().__init__(*args, **kwargs)
-            self.fields['asset'].queryset = Asset.objects.all()
+            self.fields['asset'].queryset =Asset.objects.all()
             self.fields['employee'].queryset = Employee.objects.all()
+

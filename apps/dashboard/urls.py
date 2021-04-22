@@ -25,6 +25,7 @@ urlpatterns = [
     path('delete_category/delete/<int:pk>',views.CategoryDeleteView.as_view(),name='delete_category'),
     
     path('release_asset/<int:id>',views.ReleaseAssetView.as_view(),name='release_asset'),
+    path('asset_borrow/<int:id>',views.AssetBorrowHistory.as_view(),name='asset_borrow'),
     path('update_employee/<int:pk>',views.UpdateEmployeeView.as_view(),name='update_employee'),
     path('update_designation/<int:pk>',views.UpdateDesignationView.as_view(),name='update_designation'),
     path('update_asset/<int:pk>',views.UpdateAssetView.as_view(),name='update_asset'),

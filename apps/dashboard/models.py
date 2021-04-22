@@ -12,10 +12,12 @@ class Asset(models.Model):
     category = models.ForeignKey('Category',on_delete=models.CASCADE)
     model_number = models.CharField(max_length=100,null=True,blank=True)
     availability =models.BooleanField(default=True)
-    added_date = models.DateTimeField(auto_now=True)
+    added_on = models.DateTimeField(auto_now=True)
     
     def __str__(self):
         return self.name + "--" + self.model_number 
+    class Meta:
+        ordering = ['-added_on']
 
 class Employee(models.Model):
     name = models.CharField(max_length=100)
@@ -25,6 +27,10 @@ class Employee(models.Model):
     address = models.CharField(max_length=100)
     status =models.BooleanField(default=True)
     created_on = models.DateTimeField(auto_now_add=True)
+    
+    
+    class Meta:
+        ordering = ['-created_on']
 
     def __str__(self):
         return  self.email
@@ -42,7 +48,10 @@ class AssignAsset(models.Model):
     assign_on=models.DateTimeField(auto_now_add=True)
     expire_on = models.DateTimeField()
     release =models.BooleanField(default=True)
-    release_on = models.DateTimeField(auto_now=True)
+    release_on = models.DateTimeField(null=True,blank=True)
 
     def __str__(self):
         return self.employee.name +"-"+ self.asset.name
+
+    class Meta:
+        ordering = ['-release_on']

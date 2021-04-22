@@ -1,7 +1,9 @@
+import datetime
+from typing import Generic
 from django import views
 from django.db.models import query
 from django.http.response import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from django.views import generic,View
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
@@ -11,6 +13,8 @@ from apps.dashboard.models import Asset, AssignAsset, Category, Designation, Emp
 from django.urls import reverse_lazy
 from django.conf import settings
 from django.core.mail import send_mail
+from django.contrib import messages
+
 
 class IndexView(generic.ListView):
     template_name = "dashboard/index.html"
@@ -42,19 +46,22 @@ class EmployeeView(generic.ListView):
         return Employee.objects.all()
 
 @method_decorator(login_required, name='dispatch')
-class EmployeeDeleteView(generic.DeleteView):
+class EmployeeDeleteView(SuccessMessageMixin,generic.DeleteView):
     model = Employee
-    # template_name = 'dshboard/employee_confirm_delete.html'
     success_url = reverse_lazy('dashboard:view_employee')
+    success_message = "Employee was Deleted successfully"   
     def get(self, request, *args, **kwargs):
+        messages.success(self.request, self.success_message)
         return self.delete(request, *args, **kwargs)
 
 @method_decorator(login_required, name='dispatch')
-class UpdateEmployeeView(generic.UpdateView):
+class UpdateEmployeeView(SuccessMessageMixin,generic.UpdateView):
     form_class = EmployeeForm
     model = Employee
     template_name = "dashboard/update_employee.html"
     success_url = reverse_lazy('dashboard:view_employee')
+    success_message = "Employee was Updated successfully"
+
 
     
 @method_decorator(login_required, name='dispatch')
@@ -69,22 +76,26 @@ class CreateDesignationView(SuccessMessageMixin,generic.CreateView):
     model = Designation
     template_name = "dashboard/create_designation.html"
     success_url = reverse_lazy('dashboard:view_designation')
-    success_message = "Employee was Created successfully"
+    success_message = "Designation was Created successfully"
 
 @method_decorator(login_required, name='dispatch')
-class DesignationDeleteView(generic.DeleteView):
+class DesignationDeleteView(SuccessMessageMixin,generic.DeleteView):
     model = Designation
-    # Template_name = 'dashboard/designaion_confirm_delete.html'
+    success_message = "Designation was Deleted successfully"
+
     success_url = reverse_lazy('dashboard:view_designation')
     def get(self, request, *args, **kwargs):
+        messages.success(self.request, self.success_message)
         return self.delete(request, *args, **kwargs)
 
 @method_decorator(login_required, name='dispatch')
-class UpdateDesignationView(generic.UpdateView):
+class UpdateDesignationView(SuccessMessageMixin,generic.UpdateView):
     form_class = DesignationForm
     model = Designation
     template_name = "dashboard/update_designation.html"
     success_url = reverse_lazy('dashboard:view_designation')
+    success_message = "Designation was Updated successfully"
+
 
 
 @method_decorator(login_required, name='dispatch')
@@ -93,6 +104,8 @@ class CreateAssetView(SuccessMessageMixin,generic.CreateView):
     model = Asset
     template_name = "dashboard/create_asset.html"
     success_url = reverse_lazy('dashboard:view_asset')
+    success_message = "Asset was Created successfully"
+
 
 @method_decorator(login_required, name='dispatch')
 class AssetView(generic.ListView):
@@ -101,26 +114,32 @@ class AssetView(generic.ListView):
         return Asset.objects.all()
 
 @method_decorator(login_required, name='dispatch')
-class AssetDeleteView(generic.DeleteView):
+class AssetDeleteView(SuccessMessageMixin,generic.DeleteView):
     model = Asset
-    # Template_name = 'dashboard/asset_confirm_delete.html'
+    success_message = "Asset was Deleted successfully"
     success_url = reverse_lazy('dashboard:view_asset')
     def get(self, request, *args, **kwargs):
+        messages.success(self.request, self.success_message)
         return self.delete(request, *args, **kwargs)
 
 @method_decorator(login_required, name='dispatch')
-class UpdateAssetView(generic.UpdateView):
+class UpdateAssetView(SuccessMessageMixin,generic.UpdateView):
     form_class = AssetUpdateForm
     model = Asset
     template_name = "dashboard/update_asset.html"
     success_url = reverse_lazy('dashboard:view_asset')
+    success_message = "Asset was Updated successfully"
+
 
 @method_decorator(login_required, name='dispatch')
-class CreateCategoryView(generic.CreateView):
+class CreateCategoryView(SuccessMessageMixin,generic.CreateView):
     form_class = CategoryForm
     model = Category
     template_name = "dashboard/create_category.html"
     success_url = reverse_lazy('dashboard:view_category')
+    success_message = "Category was Created successfully"
+
+
 
 
 @method_decorator(login_required, name='dispatch')
@@ -130,19 +149,22 @@ class CategoryView(generic.ListView):
         return Category.objects.all()
 
 @method_decorator(login_required, name='dispatch')
-class CategoryDeleteView(generic.DeleteView):
+class CategoryDeleteView(SuccessMessageMixin,generic.DeleteView):
     model = Category
-    # Template_name = 'dashboard/category_confirm_delete.html'
+    success_message = "Category was Deleted successfully"
     success_url = reverse_lazy('dashboard:view_category')
     def get(self, request, *args, **kwargs):
+        messages.success(self.request, self.success_message)
         return self.delete(request, *args, **kwargs)
 
 @method_decorator(login_required, name='dispatch')
-class UpdateCategoryView(generic.UpdateView):
+class UpdateCategoryView(SuccessMessageMixin,generic.UpdateView):
     form_class = CategoryForm
     model = Category
     template_name = "dashboard/update_category.html"
     success_url = reverse_lazy('dashboard:view_category')
+    success_message = "Category was Updated successfully"
+
 
 
 class AssignAssetView(View):
@@ -162,6 +184,7 @@ class AssignAssetView(View):
             print(name)
             object.release=True
             object.save()
+            messages.success(self.request,f"{asset} borrowed by {employee} Successfully ")
             subject = 'welcome to GFG world'
             message = f'Hi {name}, You have got {asset}. for {expire}'
             email_from = settings.EMAIL_HOST_USER
@@ -173,9 +196,16 @@ class AssignAssetView(View):
 class ReleaseAssetView(View):
     def get(self,request,id):
         queryset=AssignAsset.objects.filter(id=id).update(release=False)
+        queryset1=AssignAsset.objects.filter(id=id).update(release_on=datetime.datetime.now())
+        messages.success(request,"Asset Submitted Successfully")
         return HttpResponseRedirect("/view_assign_asset")
 
 class AssignAssetListView(generic.ListView):
     model = AssignAsset
     template_name = "dashboard/assign_asset_list.html"
     queryset = AssignAsset.objects.filter(release=True)
+
+class AssetBorrowHistory(View):
+    def get(self,request,id):
+        queryset=AssignAsset.objects.filter(employee__id=id)
+        return render(request,"dashboard/asset_history.html",{'queryset':queryset})
