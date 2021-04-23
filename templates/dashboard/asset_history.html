@@ -8,14 +8,14 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header p-3 d-flex justify-content-between">
-                        <strong class="card-title">Borrowed History Table</strong>
+                        <strong class="card-title">Borrowed History Table of {{name}}</strong>
                         <a href="{% url 'dashboard:view_assign_asset' %}" class="btn btn-secondary">Go Back</a>
                     </div>
                     <div class="card-body">
                         <table id="bootstrap-data-table-export" class="table table-striped table-bordered">
                             <thead>
                                 <tr>
-                                    <th>Name</th>
+                                    
                                     <th>Asset</th>
                                     <th>Model Number</th>
                                     <th>Borrowed On</th>
@@ -28,14 +28,12 @@
                                 
                                 {% for borrow in queryset %}  
                                 <tr>
-                                    <td>{{borrow.employee.name|title}}</td>
+                                    
                                     <td>{{borrow.asset|title}}</td>
                                     <td>{{borrow.asset.model_number|slice:":50"}}</td>
                                     <td>{{borrow.assign_on}}</td>
                                     <td>{{borrow.expire_on}}</td>
                                     <td>{{borrow.release_on}}</td>
-
-                                   
                                 </tr>
                                 
                                 {% endfor %}

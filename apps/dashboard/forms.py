@@ -10,7 +10,7 @@ class EmployeeForm(forms.ModelForm):
         widgets = {
             'name' : forms.TextInput(attrs={'class':'form-control','placeholder':'Name'}),
             'email' : forms.EmailInput(attrs={'class':'form-control','placeholder':'email'}),
-            'designation': forms.Select(attrs={'class':'form-control'}),
+            'designation': forms.Select(attrs={'class':'form-control','placeholder':'Designation'}),
             'phone' : forms.TextInput(attrs={'minlength': 10, 'maxlength': 15, 'required': True, 'type': 'number','class':'form-control'}), 
             'address' : forms.TextInput(attrs={'class':'form-control','placeholder':'Address'}),
        }
@@ -20,6 +20,7 @@ class EmployeeForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['designation'].queryset = Designation.objects.all()
+        self.fields['designation'].empty_label = "------Select Designation------"
     
     # def clean_email(self):
     #       email = self.cleaned_data['email']
@@ -57,7 +58,8 @@ class AssetForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['category'].queryset = Category.objects.all()
-        # self.fields['employee'].queryset = Employee.objects.all()
+        self.fields['category'].empty_label = "------Select Category------"
+
 
 
 class AssetUpdateForm(forms.ModelForm):  
@@ -68,8 +70,7 @@ class AssetUpdateForm(forms.ModelForm):
             'category' : forms.Select(attrs={'class':'form-control','placeholder':'Category'}),
             'model_number': forms.TextInput(attrs={'class':'form-control','placeholder':'Model Number'}),
             'availability' : forms.CheckboxInput(attrs={'class':'form-check-input'}), 
-            # 'employee' : forms.Select(attrs={'class':'form-control'}),
-            # 'expire_date' : forms.TextInput(attrs={'class':'form-control','type': 'date'}),
+           
        }
         fields = "__all__"
         exclude =('employee','expire_date')
@@ -77,6 +78,8 @@ class AssetUpdateForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['category'].queryset = Category.objects.all()
+        self.fields['category'].empty_label = "------Select Category------"
+
         
 
 
@@ -103,5 +106,8 @@ class AssignAssetForm(forms.ModelForm):
         def __init__(self, *args, **kwargs):
             super().__init__(*args, **kwargs)
             self.fields['asset'].queryset =Asset.objects.all()
+            self.fields['asset'].empty_label = "------Select Asset------"
             self.fields['employee'].queryset = Employee.objects.all()
+            self.fields['employee'].empty_label = "------Select Employee------"
+
 

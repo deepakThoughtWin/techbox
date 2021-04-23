@@ -20,9 +20,8 @@
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                     <div class="dropdown-menu-content">
-                        <a class="dropdown-item" href="#">Create Post</a>
-                        <a class="dropdown-item" href="#">View Post</a>
-                        <a class="dropdown-item" href="#">Something else here</a>
+                        <a class="dropdown-item" href="{% url 'dashboard:view_employee' %}">View</a>
+                        
                     </div>
                 </div>
             </div>
@@ -50,8 +49,8 @@
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
                     <div class="dropdown-menu-content">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
+                        <a class="dropdown-item" href="{% url 'dashboard:view_asset' %}">View</a>
+                       
                         
                     </div>
                 </div>
@@ -79,16 +78,15 @@
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton3">
                     <div class="dropdown-menu-content">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <a class="dropdown-item" href="#">Something else here</a>
+                        <!-- <a class="dropdown-item" href="#">Action</a> -->
+                       
                     </div>
                 </div>
             </div>
             <h4 class="mb-0">
-                <span class="count">{{total_draft_post}}</span>
+                <span class="count">{{total_assign_asset_expired}}</span>
             </h4>
-            <p class="text-light">Draft</p>
+            <p class="text-light">Expired Borrowed</p>
 
         </div>
 
@@ -108,16 +106,15 @@
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton4">
                     <div class="dropdown-menu-content">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <a class="dropdown-item" href="#">Something else here</a>
+                        <a class="dropdown-item" href="{% url 'dashboard:view_assign_asset' %}">View</a>
+                       
                     </div>
                 </div>
             </div>
             <h4 class="mb-0">
-                <span class="count">{{total_comment}}</span>
+                <span class="count">{{total_assign_asset}}</span>
             </h4>
-            <p class="text-light">Comments</p>
+            <p class="text-light">Borrowed</p>
 
             <div class="chart-wrapper px-3" style="height:70px;" height="70">
                 <canvas id="widgetChart4"></canvas>
@@ -127,5 +124,49 @@
     </div>
 </div>
 
-<!--/.col-->
+
+
+<div class="col-lg-12">
+    <div class="card">
+        <div class="card-header">
+            <strong class="card-title">Not Submitted Yet</strong>
+        </div>
+        <div class="card-body">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Employee</th>
+                        <th scope="col">Phone</th>
+                        <th scope="col">Asset</th>
+                        <th scope="col">Borrowed On</th>
+                        <th scope="col">Expire On</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                    {% for assign_asset  in assign_asset_list %} 
+                    <tr>
+                        <th scope="row">{{assign_asset.employee.name}}</th>
+                        <th scope="row">{{assign_asset.employee.phone}}</th>
+                        <td>{{assign_asset.asset}}</td>
+                        <td><span style="color:green;">@{{assign_asset.assign_on}}</span></td>
+                        <td><span style="color:red;">@{{assign_asset.expire_on}}</span></td>
+                        <td> <a href="{% url 'dashboard:release_asset' assign_asset.id %}"
+                            data-toggle="modal" data-target="#exampleModal1" onClick="getId('{{assign_asset.id}}')" ><button type="button" class="btn btn-danger rounded">Release</button></a></td>
+                    </tr>
+                    {% endfor %}
+                   
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script>
+    function getId(id) {
+        var a =document.getElementById('release_record');
+        // alert(id)
+        a.href = "/release_asset/"+id;
+    }
+  </script>
 

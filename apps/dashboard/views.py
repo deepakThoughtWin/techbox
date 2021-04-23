@@ -1,8 +1,8 @@
-import datetime
+
 from typing import Generic
 from django import views
 from django.db.models import query
-from django.http.response import HttpResponseRedirect
+from django.http.response import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.views import generic,View
 from django.contrib.auth.decorators import login_required
@@ -14,17 +14,23 @@ from django.urls import reverse_lazy
 from django.conf import settings
 from django.core.mail import send_mail
 from django.contrib import messages
+from datetime import datetime, timedelta
+from django.utils import timezone
 
 
 class IndexView(generic.ListView):
     template_name = "dashboard/index.html"
     queryset =Employee.objects.all()
     queryset1=Asset.objects.all()
+    queryset2=AssignAsset.objects.all()
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['total_employee'] = self.queryset.all().count()
         context['total_asset'] = self.queryset1.all().count()
+        context['assign_asset_list'] = self.queryset2.filter(expire_on__lte=datetime.now().date(),release=True)
+        context['total_assign_asset_expired'] = self.queryset2.filter(expire_on__lte=datetime.now().date(),release=True).count()
+        context['total_assign_asset'] = self.queryset2.filter(release=True).count()
         return context
 
 @method_decorator(login_required, name='dispatch')
@@ -192,11 +198,10 @@ class AssignAssetView(View):
             send_mail( subject, message, email_from, recipient_list )
 
         return HttpResponseRedirect("/view_assign_asset")
-    
 class ReleaseAssetView(View):
     def get(self,request,id):
         queryset=AssignAsset.objects.filter(id=id).update(release=False)
-        queryset1=AssignAsset.objects.filter(id=id).update(release_on=datetime.datetime.now())
+        queryset1=AssignAsset.objects.filter(id=id).update(release_on=timezone.now())
         messages.success(request,"Asset Submitted Successfully")
         return HttpResponseRedirect("/view_assign_asset")
 
@@ -208,4 +213,11 @@ class AssignAssetListView(generic.ListView):
 class AssetBorrowHistory(View):
     def get(self,request,id):
         queryset=AssignAsset.objects.filter(employee__id=id)
-        return render(request,"dashboard/asset_history.html",{'queryset':queryset})
+        employee=Employee.objects.filter(id=id)
+        context={}
+        for employee in employee:
+                context['name']=employee.name
+                break
+        context['queryset']=queryset
+        print(context)
+        return render(request,"dashboard/asset_history.html",context=context)
