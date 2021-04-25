@@ -1,11 +1,13 @@
 from django.urls import path
 from apps.dashboard import views
+from apps.dashboard import task
 
 app_name = "dashboard"
 
 
 urlpatterns = [
     path('home/',views.IndexView.as_view(),name='home'),
+    # path('task/',task.send_notifiction,name='task'),
     path('employee/', views.CreateEmployeeView.as_view(), name='employee'),
     path('designation/', views.CreateDesignationView.as_view(), name='designation'),
     path('asset/', views.CreateAssetView.as_view(), name='asset'),

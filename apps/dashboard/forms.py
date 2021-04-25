@@ -1,7 +1,7 @@
 from django.forms.models import ModelChoiceField
 from apps.dashboard.models import Asset, AssignAsset, Category, Designation, Employee
 from django import forms
-# from searchableselect.widgets import SearchableSelect
+
 
 
 class EmployeeForm(forms.ModelForm):  
@@ -22,12 +22,7 @@ class EmployeeForm(forms.ModelForm):
         self.fields['designation'].queryset = Designation.objects.all()
         self.fields['designation'].empty_label = "------Select Designation------"
     
-    # def clean_email(self):
-    #       email = self.cleaned_data['email']
-    #       print(email)
-    #       if Employee.objects.filter(email=email).exists():
-    #           raise forms.ValidationError("Already Exists")
-    #       return email
+    
         
 class DesignationForm(forms.ModelForm):  
     

@@ -10,7 +10,10 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 import os
 import sys
+from celery import app
 from unipath import Path
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
 
 
 PROJECT_ROOT = os.path.dirname(__file__)
@@ -36,6 +39,8 @@ ALLOWED_HOSTS = ["*"]
 # Application definition
 
 INSTALLED_APPS = [
+    'admin_interface',
+    'colorfield',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -44,9 +49,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'apps.dashboard',
     'apps.authentication',
-    'celery'
+    'celery',
+    'import_export',
 ]
-
+X_FRAME_OPTIONS='SAMEORIGIN'
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -55,6 +61,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # 'apps.authentication.AuthRequiredMiddleware.AuthRequiredMiddleware'
 ]
 
 ROOT_URLCONF = 'thetechbox.urls'
@@ -138,3 +145,49 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = "mdeeppatidar@gmail.com"
 EMAIL_HOST_PASSWORD = "Deepak@9399@"
+
+# CELERY STUFF
+BROKER_URL = 'redis://localhost:6379'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'Asia/Kolkata'
+
+# from celery.schedules import crontab   
+
+# CELERY_BROKER_URL = 'redis://localhost:6379' 
+# CELERY_TIMEZONE = 'Asia/Kolkata'   
+# # Let's make things happen 
+# CELERY_BEAT_SCHEDULE = {
+# #  'send-summary-every-hour': {
+# #        'task': 'summary',
+# #         # There are 4 ways we can handle time, read further 
+# #        'schedule': 5.0,
+# #         # If you're using any arguments
+# #        'args': ("We don’t need any",),
+# #     },
+#     # Executes every Friday at 4pm
+#     'send-notification-on-friday-afternoon': { 
+#          'task': 'apps.dashboard.task.send_notification', 
+#         #  'schedule': crontab(hour=16, day_of_week=5),
+#             'schedule': 5.0,
+
+#         },          
+# }
+
+# sentry
+
+sentry_sdk.init(
+    dsn="https://fe5a87c0befe4bcf89a49b5c3d97c159@o578639.ingest.sentry.io/5734982",
+    integrations=[DjangoIntegration()],
+
+    # Set traces_sample_rate to 1.0 to capture 100%
+    # of transactions for performance monitoring.
+    # We recommend adjusting this value in production.
+    traces_sample_rate=1.0,
+
+    # If you wish to associate users to errors (assuming you are using
+    # django.contrib.auth) you may enable sending PII data.
+    send_default_pii=True
+)

@@ -16,5 +16,8 @@ class Registration(View):
                 login(request, user)
                 return redirect('home')
     def get(self,request):
-        form = UserCreationForm()
-        return render(request, 'registration/register.html', {'form': form})
+        if request.user.is_authenticated:
+                return redirect('home')
+        else:
+            form = UserCreationForm()
+            return render(request, 'registration/register.html', {'form': form})
