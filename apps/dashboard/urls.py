@@ -1,6 +1,6 @@
 from django.urls import path
 from apps.dashboard import views
-from apps.dashboard import task
+
 
 app_name = "dashboard"
 

@@ -1,11 +1,11 @@
 from datetime import datetime
-from celery.task import task
+# from celery.task import task
 from celery import shared_task
 from django.http.response import HttpResponse 
 from django.core.mail import send_mail
 from django.conf import settings
 from celery import Celery
-from django.apps import apps
+# from django.apps import apps
 app = Celery('task',broker="redis://localhost:6379/0")
 
 def mail(mail_list,asset,expire,name):
@@ -17,10 +17,11 @@ def mail(mail_list,asset,expire,name):
 
 
 
-@task
+@shared_task
 def send_notifiction():
-    from .models import AssignAsset
-    # model = apps.get_model('dashboard', 'AssignAsset')
+    # model = apps.get_model('apps.dashboard', 'AssignAsset')
+    from apps.dashboard import AssignAsset
+
     queryset=AssignAsset.objects.filter(expire_on__lte=datetime.now().date(),release=True)
     mail_list=[]
     for employee in queryset:
@@ -35,7 +36,7 @@ def send_notifiction():
 
 app.conf.beat_schedule = {
 "run-me-every-ten-seconds": {
-"task": "task.send_notifiction",
+"task": "tasks.send_notifiction",
 "schedule": 5.0
  }
 } 

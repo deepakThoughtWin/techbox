@@ -5,13 +5,13 @@ from celery import Celery
 app = Celery('periodic', broker="pyamqp://guest@localhost//")
 @app.task
 def see_you():
-    print("See you in ten seconds!")
+    print("I am  deepak!")
     # send_notifiction()
     
 
 app.conf.beat_schedule = {
-    "see-you-in-ten-seconds-task": {
+    "run-in-5-seconds-task": {
         "task": "periodic.see_you",
-        "schedule": 10.0
+        "schedule": 5.0
     }
 }

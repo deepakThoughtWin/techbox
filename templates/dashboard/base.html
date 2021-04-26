@@ -119,16 +119,16 @@
                         <div class="dropdown for-notification">
                             <button class="btn btn-secondary dropdown-toggle" type="button" id="notification" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fa fa-bell"></i>
-                                <span class="count bg-danger">{{user.notifications.unread.count}}</span>
+                                <span class="count bg-danger"></span>
                             </button>
                             <div class="dropdown-menu" aria-labelledby="notification">
-                                <p class="red">You have {{user.notifications.unread.count}} Notification <a onclick="window.history.back()" href="/notifications/mark-all-as-read/" class="btn btn-danger"> Mark all as read</a></p>
-                                {% for notification in  user.notifications.unread %}
+                                <p class="red">You have  Notification <a onclick="window.history.back()" href="/notifications/mark-all-as-read/" class="btn btn-danger"> Mark all as read</a></p>
+                                
                                 <a class="dropdown-item media bg-flat-color" href="#">
                                     <i class="fa fa-indfo"></i>
-                                <p>{{ notification.description }}</p>
+                                <p></p>
                             </a>
-                            {% endfor %}
+                            
                     
                             </div>
                         </div>
@@ -234,7 +234,7 @@
                 <div class="page-header float-right">
                     <div class="page-title">
                         <ol class="breadcrumb text-right">
-                            <li class="active">{{request.user}}</li>
+                            <li class="active"></li>
                         </ol>
                     </div>
                 </div>
