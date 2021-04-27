@@ -1,5 +1,18 @@
 from django.db import models
-from django.contrib.auth.models import User
+
+class AssignAsset(models.Model):
+    employee=models.ForeignKey('Employee',on_delete=models.CASCADE)
+    asset=models.ForeignKey('Asset',on_delete=models.CASCADE)
+    assign_on=models.DateTimeField(auto_now_add=True)
+    expire_on = models.DateTimeField()
+    release =models.BooleanField(default=True)
+    release_on = models.DateTimeField(null=True,blank=True)
+
+    def __str__(self):
+        return self.employee.name +"-"+ self.asset.name
+
+    class Meta:
+        ordering = ['-release_on']
 
 class Category(models.Model):
     name = models.CharField(max_length=100)
@@ -41,17 +54,3 @@ class Designation(models.Model):
 
     def __str__(self):
         return self.name
-
-class AssignAsset(models.Model):
-    employee=models.ForeignKey(Employee,on_delete=models.CASCADE)
-    asset=models.ForeignKey(Asset,on_delete=models.CASCADE)
-    assign_on=models.DateTimeField(auto_now_add=True)
-    expire_on = models.DateTimeField()
-    release =models.BooleanField(default=True)
-    release_on = models.DateTimeField(null=True,blank=True)
-
-    def __str__(self):
-        return self.employee.name +"-"+ self.asset.name
-
-    class Meta:
-        ordering = ['-release_on']

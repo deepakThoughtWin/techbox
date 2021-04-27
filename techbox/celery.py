@@ -1,3 +1,4 @@
+from __future__ import absolute_import, unicode_literals
 import os
 
 from celery import Celery
@@ -5,9 +6,9 @@ from celery import Celery
 
 
 # set the default Django settings module for the 'celery' program.
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'thetechbox.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'techbox.settings')
 
-app = Celery('thetechbox')
+app = Celery('techbox')
 
 # Using a string here means the worker doesn't have to serialize
 # the configuration object to child processes.

@@ -10,17 +10,27 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
-import os
+# import os
 
-import sys
-from celery import app
-from unipath import Path
+# import sys
+# from unipath import Path
+# # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+# BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# from celery import app
+from __future__ import absolute_import
 import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
+
+import os,sys
+import datetime
+from unipath import Path
+
+from celery.schedules import crontab
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-
+PROJECT_DIR = Path(__file__).ancestor(2)
+PROJECT_APPS = Path(__file__).ancestor(2)
+sys.path.insert(0, Path(PROJECT_APPS, 'apps'))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
@@ -44,8 +54,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'apps.dashboard',
-    'apps.authentication',
+    'dashboard',
+    'authentication',
     'celery',
     'import_export',
 ]
@@ -148,13 +158,12 @@ CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = 'Asia/Kolkata'
-
+CELERY_IMPORTS = ['dashboard.task']
 # from celery.schedules import crontab   
 
 # CELERY_BROKER_URL = 'redis://localhost:6379' 
 # CELERY_TIMEZONE = 'Asia/Kolkata'   
 # # Let's make things happen 
-# CELERY_BEAT_SCHEDULE = {
 # #  'send-summary-every-hour': {
 # #        'task': 'summary',
 # #         # There are 4 ways we can handle time, read further 
@@ -162,14 +171,15 @@ CELERY_TIMEZONE = 'Asia/Kolkata'
 # #         # If you're using any arguments
 # #        'args': ("We don’t need any",),
 # #     },
-#     # Executes every Friday at 4pm
-#     'send-notification-on-friday-afternoon': { 
-#          'task': 'apps.dashboard.task.send_notification', 
-#         #  'schedule': crontab(hour=16, day_of_week=5),
-#             'schedule': 5.0,
+    # Executes every Friday at 4pm
+CELERY_BEAT_SCHEDULE = {
+    "send-notification-on-friday-afternoon": { 
+         "task": "apps.dashboard.task.send_notification", 
+        #  'schedule': crontab(hour=16, day_of_week=5),
+            "schedule": 5.0,
 
-#         },          
-# }
+        },          
+}
 
 # sentry
 

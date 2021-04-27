@@ -4,7 +4,6 @@ from apps.dashboard import views
 
 app_name = "dashboard"
 
-
 urlpatterns = [
     path('home/',views.IndexView.as_view(),name='home'),
     # path('task/',task.send_notifiction,name='task'),
