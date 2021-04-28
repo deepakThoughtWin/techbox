@@ -1,12 +1,12 @@
 from django.urls import path
 from apps.dashboard import views
-
+from apps.dashboard import api_views
 
 app_name = "dashboard"
 
 urlpatterns = [
     path('home/',views.IndexView.as_view(),name='home'),
-    # path('task/',task.send_notifiction,name='task'),
+
     path('employee/', views.CreateEmployeeView.as_view(), name='employee'),
     path('designation/', views.CreateDesignationView.as_view(), name='designation'),
     path('asset/', views.CreateAssetView.as_view(), name='asset'),
@@ -34,5 +34,39 @@ urlpatterns = [
 
 
 
+# API----------------------------API-------------------------------------------------------------
+# ------------------------------Employee-------------------------------------------------------
+    path('api/employee/create',api_views.EmployeeCreateApi.as_view(),name='api_employee_create'),
+    path('api/employee/list',api_views.EmployeeListApi.as_view(),name='api_employee_list'),
+    path('api/employee/update/<int:pk>',api_views.EmployeeUpdateApi.as_view(),name='api_employee_update'),
+    path('api/employee/delete/<int:pk>',api_views.EmployeeDeleteApi.as_view(),name='api_employee_delte'),
 
+# --------------------------------Designation-------------------------------------------------------
+    path('api/designation/create',api_views.DesignationCreateApi.as_view(),name='api_designation_create'),
+
+    path('api/designation/list',api_views.DesignationListApi.as_view(),name='api_designation_list'),
+    path('api/designation/update/<int:pk>',api_views.DesignationUpdateApi.as_view(),name='api_designation_update'),
+
+    path('api/designation/delete/<int:pk>',api_views.DesignationDeleteApi.as_view(),name='api_designation_delete'),
+
+# --------------------------------asset-------------------------------------------------------
+    path('api/asset/create',api_views.AssetCreateApi.as_view(),name='api_asset_create'),
+
+    path('api/asset/list',api_views.AssetListApi.as_view(),name='api_asset_list'),
+    path('api/asset/update/<int:pk>',api_views.AssetUpdateApi.as_view(),name='api_asset_update'),
+
+    path('api/asset/delete/<int:pk>',api_views.AssetDeleteApi.as_view(),name='api_asset_delete'),
+
+# --------------------------------category-------------------------------------------------------
+    path('api/category/create',api_views.CategoryCreateApi.as_view(),name='api_category_create'),
+
+    path('api/category/list',api_views.CategoryListApi.as_view(),name='api_category_list'),
+    path('api/category/update/<int:pk>',api_views.CategoryUpdateApi.as_view(),name='api_category_update'),
+
+    path('api/category/delete/<int:pk>',api_views.CategorytDeleteApi.as_view(),name='api_category_delete'),
+
+# ------------------------------assignasset--------------------------------------------------------
+    path('api/borrowasset/<int:pk>',api_views.AssignAssetDetailAPI.as_view(),name='api_borrow_asset'),
+    path('api/borrowasset/',api_views.AssignAssetDetailAPI.as_view(),name='api_borrow_asset'),
 ]
+ 

@@ -54,11 +54,21 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'dashboard',
-    'authentication',
+    'django.contrib.sites',
+    'apps.dashboard',
+    'apps.authentication',
     'celery',
     'import_export',
+    'rest_framework',
+    'rest_framework.authtoken',
+    'rest_auth',
+    'allauth',
+    'allauth.account',
+    'rest_auth.registration',
 ]
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+SITE_ID = 1
 X_FRAME_OPTIONS='SAMEORIGIN'
 
 MIDDLEWARE = [
@@ -71,6 +81,13 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+               'rest_framework.authentication.TokenAuthentication',
+    ),
+                      
+
+}
 ROOT_URLCONF = 'techbox.urls'
 
 TEMPLATES = [
@@ -172,14 +189,14 @@ CELERY_IMPORTS = ['dashboard.task']
 # #        'args': ("We don’t need any",),
 # #     },
     # Executes every Friday at 4pm
-CELERY_BEAT_SCHEDULE = {
-    "send-notification-on-friday-afternoon": { 
-         "task": "apps.dashboard.task.send_notification", 
-        #  'schedule': crontab(hour=16, day_of_week=5),
-            "schedule": 5.0,
+# CELERY_BEAT_SCHEDULE = {
+#     "send-notification-on-friday-afternoon": { 
+#          "task": "apps.dashboard.task.send_notification", 
+#         #  'schedule': crontab(hour=16, day_of_week=5),
+#             "schedule": 5.0,
 
-        },          
-}
+#         },          
+# }
 
 # sentry
 

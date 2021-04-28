@@ -16,7 +16,7 @@ from django.core.mail import send_mail
 from django.contrib import messages
 from datetime import datetime, timedelta
 from django.utils import timezone
-
+from .task import borrow_mail, send_notification_expire
 
 class IndexView(generic.ListView):
     template_name = "dashboard/index.html"
@@ -31,6 +31,7 @@ class IndexView(generic.ListView):
         context['assign_asset_list'] = self.queryset2.filter(expire_on__lte=datetime.now().date(),release=True)
         context['total_assign_asset_expired'] = self.queryset2.filter(expire_on__lte=datetime.now().date(),release=True).count()
         context['total_assign_asset'] = self.queryset2.filter(release=True).count()
+        send_notification_expire.delay()
         return context
 
 @method_decorator(login_required, name='dispatch')
@@ -181,23 +182,23 @@ class AssignAssetView(View):
     def post(self, request, *args, **kwargs):
         form = AssignAssetForm(request.POST or None)
         if form.is_valid():
-            email= form.cleaned_data['employee']
+            email_return= form.cleaned_data['employee']
             asset= form.cleaned_data['asset']
             expire= form.cleaned_data['expire_on']
             object=form.save(commit=False)
-            employee=Employee.objects.get(email=email)
+            employee=Employee.objects.get(email=email_return)
             name=employee.name
+            email=employee.email
             print(name)
             object.release=True
             object.save()
             messages.success(self.request,f"{asset} borrowed by {employee} Successfully ")
-            subject = 'welcome to GFG world'
-            message = f'Hi {name}, You have got {asset}. for {expire}'
-            email_from = settings.EMAIL_HOST_USER
-            recipient_list = [email, ]
-            send_mail( subject, message, email_from, recipient_list )
-
+            email= form.cleaned_data['employee']
+            mail_list=[email,]
+            borrow_mail.delay(mail_list,asset,expire,name)
         return HttpResponseRedirect("/view_assign_asset")
+
+
 class ReleaseAssetView(View):
     def get(self,request,id):
         queryset=AssignAsset.objects.filter(id=id).update(release=False)
