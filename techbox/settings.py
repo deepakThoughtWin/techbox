@@ -197,9 +197,8 @@ CELERY_IMPORTS = ['dashboard.task']
 
 #         },          
 # }
-
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # sentry
-
 sentry_sdk.init(
     dsn="https://fe5a87c0befe4bcf89a49b5c3d97c159@o578639.ingest.sentry.io/5734982",
     integrations=[DjangoIntegration()],

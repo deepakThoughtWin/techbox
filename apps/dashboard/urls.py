@@ -39,7 +39,7 @@ urlpatterns = [
     path('api/employee/create',api_views.EmployeeCreateApi.as_view(),name='api_employee_create'),
     path('api/employee/list',api_views.EmployeeListApi.as_view(),name='api_employee_list'),
     path('api/employee/update/<int:pk>',api_views.EmployeeUpdateApi.as_view(),name='api_employee_update'),
-    path('api/employee/delete/<int:pk>',api_views.EmployeeDeleteApi.as_view(),name='api_employee_delte'),
+    path('api/employee/delete/<int:pk>',api_views.EmployeeDeleteApi.as_view(),name='api_employee_delete'),
 
 # --------------------------------Designation-------------------------------------------------------
     path('api/designation/create',api_views.DesignationCreateApi.as_view(),name='api_designation_create'),
@@ -67,6 +67,6 @@ urlpatterns = [
 
 # ------------------------------assignasset--------------------------------------------------------
     path('api/borrowasset/<int:pk>',api_views.AssignAssetDetailAPI.as_view(),name='api_borrow_asset'),
-    path('api/borrowasset/',api_views.AssignAssetDetailAPI.as_view(),name='api_borrow_asset'),
+    path('api/borrowasset/',api_views.AssignAssetDetailAPI.as_view(),name='api_borrow_asset1'),
 ]
  
