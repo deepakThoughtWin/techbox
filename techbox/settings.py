@@ -46,7 +46,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'admin_interface',
+    # 'admin_interface',
     'colorfield',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -62,11 +62,11 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'rest_auth',
-    'allauth',
-    'allauth.account',
-    'rest_auth.registration',
+    # 'allauth',
+    # 'allauth.account',
+    # 'rest_auth.registration',
 ]
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 
 SITE_ID = 1
 X_FRAME_OPTIONS='SAMEORIGIN'

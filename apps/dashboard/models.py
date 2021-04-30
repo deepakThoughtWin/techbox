@@ -28,7 +28,7 @@ class Asset(models.Model):
     added_on = models.DateTimeField(auto_now=True)
     
     def __str__(self):
-        return self.name + "--" + self.model_number 
+        return self.name 
     class Meta:
         ordering = ['-added_on']
 

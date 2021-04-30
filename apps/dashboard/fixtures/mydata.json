@@ -1,0 +1,6 @@
+[
+    {"model": "dashboard.category", "pk": 2, "fields": {"name": "Electronics", "added_date": "2021-04-26T06:25:30.558Z"}}, {"model": "dashboard.category", "pk": 3, "fields": {"name": "Genral items", "added_date": "2021-04-26T06:25:43.771Z"}}, {"model": "dashboard.category", "pk": 4, "fields": {"name": "My Iteam", "added_date": "2021-04-26T06:25:43.771Z"}}
+
+   
+
+]

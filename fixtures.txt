@@ -1,0 +1,32 @@
+Fixtures are initial data for the database. The most straightforward way when you have some existing data already is to use the command dumpdata
+
+ ./manage.py dumpdata > databasedump.json                # full database
+ ./manage.py dumpdata myapp > databasedump.json          # only 1 app
+ ./manage.py dumpdata myapp.mymodel > databasedump.json  # only 1 model (table)
+
+
+ This will create a json file which can be imported again by using
+
+./manage.py loaddata databasedump.json
+
+
+
+When using the loadddata without specifying a file, Django will look for a fixtures folder in your app or the list of directories provided in the FIXTURE_DIRS in settings, and use its content instead.
+
+/myapp
+   /fixtures 
+        myfixtures.json
+        morefixtures.xml 
+
+
+To load the fixture in the test, you can use a special attribute of the class TestCase called fixtures:
+
+from django.test import TestCase
+from django.contrib.auth.models import Group
+
+class MyTest(TestCase):
+    fixtures = ["group.json"]
+
+    def test_should_create_group(self):
+        group = Group.objects.get(pk=1)
+        self.assertEqual(group.name, "appusers")

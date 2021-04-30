@@ -184,18 +184,19 @@ class AssignAssetView(View):
         if form.is_valid():
             email_return= form.cleaned_data['employee']
             asset= form.cleaned_data['asset']
+            
             expire= form.cleaned_data['expire_on']
             object=form.save(commit=False)
             employee=Employee.objects.get(email=email_return)
+            asset=Asset.objects.get(name=asset)
             name=employee.name
             email=employee.email
-            print(name)
+            
             object.release=True
             object.save()
             messages.success(self.request,f"{asset} borrowed by {employee} Successfully ")
-            email= form.cleaned_data['employee']
             mail_list=[email,]
-            borrow_mail.delay(mail_list,asset,expire,name)
+            borrow_mail.delay(mail_list)
         return HttpResponseRedirect("/view_assign_asset")
 
 
