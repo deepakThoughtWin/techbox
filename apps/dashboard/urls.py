@@ -6,6 +6,11 @@ app_name = "dashboard"
 
 urlpatterns = [
     path('home/',views.IndexView.as_view(),name='home'),
+    path('test', views.HomePageView.as_view(), name='test'),
+    path('config/', views.stripe_config),
+    path('create-checkout-session/', views.create_checkout_session),
+    path('success/', views.SuccessView.as_view()), # new
+    path('cancelled/', views.CancelledView.as_view()),
 
     path('employee/', views.CreateEmployeeView.as_view(), name='employee'),
     path('designation/', views.CreateDesignationView.as_view(), name='designation'),

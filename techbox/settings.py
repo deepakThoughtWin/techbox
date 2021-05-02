@@ -62,6 +62,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'rest_auth',
+     'webpush',
     # 'allauth',
     # 'allauth.account',
     # 'rest_auth.registration',
@@ -74,12 +75,25 @@ X_FRAME_OPTIONS='SAMEORIGIN'
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.cache.UpdateCacheMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.cache.FetchFromCacheMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    
 ]
+
+CACHE_MIDDLEWARE_SECONDS= 5
+CACHES = {
+   'default': {
+      'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+      'LOCATION': 'techbox_cache',
+   }
+}
+
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -150,13 +164,14 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = 'static'
 LOGIN_URL = '/'
 LOGIN_REDIRECT_URL = '/home/'
 LOGOUT_REDIRECT_URL = '/'
@@ -212,3 +227,8 @@ sentry_sdk.init(
     # django.contrib.auth) you may enable sending PII data.
     send_default_pii=True
 )
+
+STRIPE_PUBLISHABLE_KEY = 'pk_test_51ImfcKSC4t3SvztxWsB7OwQDw269DCG0uUYVr9843yH4OvsWBuENqMOWzIVT2mJKmfHMsRLvcjTz85huT3QhlvFH00DSV8eDd3'
+STRIPE_SECRET_KEY = 'sk_test_51ImfcKSC4t3SvztxvzEY37TgMIkxD34qRwflOgBHZ7v3AAPnKcDrXP8OnTfckmp0hiICwl16ZoCnzRsqq3j9JJ0x00gqQ3jj2y'
+
+
