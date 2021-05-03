@@ -6,6 +6,7 @@ app_name = "dashboard"
 
 urlpatterns = [
     path('home/',views.IndexView.as_view(),name='home'),
+    
     path('test', views.HomePageView.as_view(), name='test'),
     path('config/', views.stripe_config),
     path('create-checkout-session/', views.create_checkout_session),

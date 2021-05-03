@@ -23,6 +23,8 @@ from django.http.response import JsonResponse # new
 from django.views.decorators.csrf import csrf_exempt # new
 from django.views.generic.base import TemplateView
 import stripe
+from django.views.decorators.cache import cache_page
+
 class HomePageView(TemplateView):
     template_name = 'home.html'
 
@@ -38,15 +40,6 @@ def create_checkout_session(request):
         domain_url = 'http://localhost:8000/'
         stripe.api_key = settings.STRIPE_SECRET_KEY
         try:
-            # Create new Checkout Session for the order
-            # Other optional params include:
-            # [billing_address_collection] - to display billing address details on the page
-            # [customer] - if you have an existing Stripe Customer ID
-            # [payment_intent_data] - capture the payment later
-            # [customer_email] - prefill the email input in the form
-            # For full details see https://stripe.com/docs/api/checkout/sessions/create
-
-            # ?session_id={CHECKOUT_SESSION_ID} means the redirect will have the session ID set as a query param
             checkout_session = stripe.checkout.Session.create(
                 success_url=domain_url + 'success?session_id={CHECKOUT_SESSION_ID}',
                 cancel_url=domain_url + 'cancelled/',
@@ -73,6 +66,7 @@ class SuccessView(TemplateView):
 class CancelledView(TemplateView):
     template_name = 'cancelled.html'
 
+@method_decorator(login_required, name='dispatch')
 class IndexView(generic.ListView):
     template_name = "dashboard/index.html"
     queryset =Employee.objects.all()
@@ -89,7 +83,8 @@ class IndexView(generic.ListView):
         send_notification_expire.delay()
         return context
 
-@method_decorator(login_required, name='dispatch')
+
+@method_decorator([login_required,cache_page(20 * 1)],name='dispatch')
 class CreateEmployeeView(SuccessMessageMixin,generic.CreateView):
     form_class = EmployeeForm
     model = Employee

@@ -135,10 +135,10 @@ class ViewAssetAssignTestCase(TestCase):
             reverse('dashboard:api_asset_create'),
             self.asset_data,
             format="json")
-        self.response = self.client.post(
-            reverse('dashboard:api_borrow_asset1'),
-            self.asset_assign_data,
-            format="json")
+        # self.response = self.client.post(
+        #     reverse('dashboard:api_borrow_asset1'),
+        #     self.asset_assign_data,
+        #     format="json")
         
     def test_01_api_can_create_a_assetlist(self):
     #     """Test the api has employee creation capability."""

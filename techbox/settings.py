@@ -62,7 +62,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'rest_auth',
-     'webpush',
+    # 'coverage'
+    #  'webpush',
     # 'allauth',
     # 'allauth.account',
     # 'rest_auth.registration',
@@ -172,6 +173,8 @@ USE_TZ = False
 
 STATIC_URL = '/static/'
 STATIC_ROOT = 'static'
+MEDIA_ROOT = os.path.join(BASE_DIR,"media")
+MEDIA_URL = '/media/'
 LOGIN_URL = '/'
 LOGIN_REDIRECT_URL = '/home/'
 LOGOUT_REDIRECT_URL = '/'
