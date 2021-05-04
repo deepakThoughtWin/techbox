@@ -1,0 +1,72 @@
+Use pip or easy_install, as you want
+
+Bash
+pip install coverage 
+Running and erasing
+For running on a django project, use this command
+
+Bash
+coverage run --source='.' manage.py test the-app-you-want-to-test
+This command will fill a “.coverage”, located in COVERAGE_FILE and then you may see results or report. If you need to remove gathered data, execute:
+
+Bash
+coverage erase
+For a single file
+Maybe you only want to check a python code, then do
+
+Bash
+coverage run your_program.py arg1 arg2 arg3
+There are some additional options, take a look on https://coverage.readthedocs.io/en/coverage-4.3.4/cmd.html#execution
+
+About templates, see the plugin section and install one of those eggs:
+
+Django templates
+
+Mako templates
+
+See results
+If you want to show the results in the command line, run:
+
+Bash
+coverage report
+For more readable reports:
+
+Bash
+coverage html
+To know concretely what part of your code is covered by tests, use:
+
+Bash
+coverage annotate -d directory-where-to-put-annotated-files
+It will generate same source code file with an additional syntax on it:
+
+Line with “>” means it was executed
+
+Line beginning with “!” means it was not executed
+
+Line starting with “-” means the line was excluded in the coverage statistics
+
+Good coverage level
+A good coverage usually comes on 90%. However, if you see 100% it could be not so good signal because it could be someone dealing with coverage instead of quality of tests.
+
+Some tips:
+
+Be careful with the quality of your tests
+
+Don’t slow down your dev. velocity of the sake of the coverage
+
+Use coverage to find untested code and decide if it deserve to cover
+
+Excluding code
+So far so good, however sometimes we need to exclude some code that we don’t need to cover. There are several options:
+
+Specifying files to exclude and omit in .coveragerc
+
+Writing in the same line of a block the comment
+
+Python
+ # pragma: no cover
+For example, if you want to exclude generated code from coverage because it is suppossed to be maintained by the generation tool:
+
+Python
+def generated_code():   # pragma: no cover
+   do_something()
