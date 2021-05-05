@@ -1,4 +1,3 @@
-
 {% include 'dashboard/base.html' %}
 
 {% block base %}
@@ -22,27 +21,35 @@
 
                         <div class="col-lg-10">
                             <div class="card">
-                                <div class="card-header">Update Profile</div>
-                                
-                                <div class="card-body card-block">
-                                    <form action="/profile/" method="post" class="" enctype="multipart/form-data">
-                                        
-                                        {% csrf_token %}
-                                        
-                                        <div class="form-group">
-                                                {{u_form}}
-                                                <br>
-                                                {{p_form}}  
-                                        </div>
-                                       
-                                       
-                            
-                                <p style="font-size: 13px;">
-                                    {{ form.errors }}
-                                </p>
-                                
-                                <div class="form-actions form-group"><button type="submit"
-                                        class="btn btn-success">Update</button></div>
+                                <div class="card-header p-3 d-flex justify-content-between">
+                                <strong class="card-title">Update Profile</strong>
+                                {% if request.user.profile.upgraded  %}
+                                <a href="{% url 'pay:success' %}" class="btn btn-secondary">Premium Account</a>
+                                {% else %}
+                                <a href="{% url 'pay:pay' %}" class="btn btn-danger"> Upgrade Account</a>
+                                {%endif%}
+                            </div>
+
+
+                            <div class="card-body card-block">
+                                <form action="/profile/" method="post" class="" enctype="multipart/form-data">
+
+                                    {% csrf_token %}
+
+                                    <div class="form-group">
+                                        {{u_form}}
+                                        <br>
+                                        {{p_form}}
+                                    </div>
+
+
+
+                                    <p style="font-size: 13px;">
+                                        {{ form.errors }}
+                                    </p>
+
+                                    <div class="form-actions form-group"><button type="submit"
+                                            class="btn btn-success">Update</button></div>
                                 </form>
                             </div>
                         </div>
