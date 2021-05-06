@@ -9,5 +9,5 @@ from .task import asset_create_mail
 @receiver(post_save, sender=Asset) 
 def create_profile(sender, instance, created, **kwargs):
     if created:
-        asset_create_mail.delay()
+        asset_create_mail()
         

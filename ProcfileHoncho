@@ -1,0 +1,4 @@
+
+web: gunicorn techbox.wsgi --log-file -
+worker1: celery -A techbox beat -l info
+worker2: celery -A techbox worker -l info

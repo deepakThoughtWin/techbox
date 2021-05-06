@@ -80,7 +80,7 @@ class IndexView(generic.ListView):
         context['assign_asset_list'] = self.queryset2.filter(expire_on__lte=datetime.now().date(),release=True)
         context['total_assign_asset_expired'] = self.queryset2.filter(expire_on__lte=datetime.now().date(),release=True).count()
         context['total_assign_asset'] = self.queryset2.filter(release=True).count()
-        send_notification_expire.delay()
+        send_notification_expire()
         return context
 
 
@@ -246,7 +246,7 @@ class AssignAssetView(View):
             object.save()
             messages.success(self.request,f"{asset} borrowed by {employee} Successfully ")
             mail_list=[email,]
-            borrow_mail.delay(mail_list)
+            borrow_mail(mail_list)
         return HttpResponseRedirect("/view_assign_asset")
 
 
