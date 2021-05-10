@@ -6,10 +6,14 @@ from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+# from rest_framework.authentication import TokenAuthentication
+# from rest_framework.permissions import IsAuthenticated
+
 # ----------------------------Employee-------------------------------------------
 class EmployeeCreateApi(generics.CreateAPIView):
     queryset = Employee.objects.all()
     serializer_class = serializers.EmployeeSerializer
+
 
 class EmployeeListApi(generics.ListAPIView):
     queryset = Employee.objects.all()
@@ -93,7 +97,7 @@ class AssignAssetDetailAPI(APIView):
             assignasset=self.get_object(pk)
             serializer = serializers.AssignAssetSerializer(assignasset)
             return Response(serializer.data)
-    
+
     def post(self, request, format=None):
         serializer =serializers.AssignAssetSerializer(data=request.data)
         if serializer.is_valid():
@@ -113,4 +117,3 @@ class AssignAssetDetailAPI(APIView):
         assignasset = self.get_object(pk)
         assignasset.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-

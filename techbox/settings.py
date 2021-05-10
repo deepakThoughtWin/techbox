@@ -63,11 +63,9 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'rest_auth',
-    # 'coverage'
-    #  'webpush',
-    # 'allauth',
-    # 'allauth.account',
-    # 'rest_auth.registration',
+    'allauth',
+    'allauth.account',
+    'rest_auth.registration',
 ]
 
 
@@ -85,7 +83,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    
+
 ]
 
 CACHE_MIDDLEWARE_SECONDS= 5
@@ -101,9 +99,12 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
                'rest_framework.authentication.TokenAuthentication',
     ),
-                      
+    'DEFAULT_PERMISSION_CLASSES':(
+                'rest_framework.permissions.IsAuthenticated',
+    ),
 
 }
+
 ROOT_URLCONF = 'techbox.urls'
 
 TEMPLATES = [
@@ -195,26 +196,26 @@ CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = 'Asia/Kolkata'
 CELERY_IMPORTS = ['dashboard.task']
-# from celery.schedules import crontab   
+# from celery.schedules import crontab
 
-# CELERY_BROKER_URL = 'redis://localhost:6379' 
-# CELERY_TIMEZONE = 'Asia/Kolkata'   
-# # Let's make things happen 
+# CELERY_BROKER_URL = 'redis://localhost:6379'
+# CELERY_TIMEZONE = 'Asia/Kolkata'
+# # Let's make things happen
 # #  'send-summary-every-hour': {
 # #        'task': 'summary',
-# #         # There are 4 ways we can handle time, read further 
+# #         # There are 4 ways we can handle time, read further
 # #        'schedule': 5.0,
 # #         # If you're using any arguments
 # #        'args': ("We don’t need any",),
 # #     },
     # Executes every Friday at 4pm
 # CELERY_BEAT_SCHEDULE = {
-#     "send-notification-on-friday-afternoon": { 
-#          "task": "apps.dashboard.task.send_notification", 
+#     "send-notification-on-friday-afternoon": {
+#          "task": "apps.dashboard.task.send_notification",
 #         #  'schedule': crontab(hour=16, day_of_week=5),
 #             "schedule": 5.0,
 
-#         },          
+#         },
 # }
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # sentry
@@ -234,5 +235,3 @@ sentry_sdk.init(
 
 STRIPE_PUBLISHABLE_KEY = 'pk_test_51ImfcKSC4t3SvztxWsB7OwQDw269DCG0uUYVr9843yH4OvsWBuENqMOWzIVT2mJKmfHMsRLvcjTz85huT3QhlvFH00DSV8eDd3'
 STRIPE_SECRET_KEY = 'sk_test_51ImfcKSC4t3SvztxvzEY37TgMIkxD34qRwflOgBHZ7v3AAPnKcDrXP8OnTfckmp0hiICwl16ZoCnzRsqq3j9JJ0x00gqQ3jj2y'
-
-
