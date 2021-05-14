@@ -185,6 +185,7 @@ CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = 'Asia/Kolkata'
 CELERY_IMPORTS = ['dashboard.task']
+
 # from celery.schedules import crontab
 
 # CELERY_BROKER_URL = 'redis://localhost:6379'
