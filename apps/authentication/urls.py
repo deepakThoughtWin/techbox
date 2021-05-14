@@ -1,8 +1,8 @@
 from . import views
 from . import api_views
-
 from django.contrib.auth import views as auth_views
 from django.urls import path
+
 urlpatterns = [
     path('', auth_views.LoginView.as_view(), name='login'),
     path('api/login/', api_views.LoginApiView.as_view(), name='api_login'),
@@ -13,5 +13,4 @@ urlpatterns = [
     path('api/user', api_views.UserApiView.as_view(),name="user_api"),
     path('api/user/<int:pk>', api_views.UserApiView.as_view(),name="user_api"),
     path('api/register/', api_views.RegisterView.as_view(), name='user_register'),
-
 ]

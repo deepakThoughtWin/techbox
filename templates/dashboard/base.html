@@ -1,5 +1,5 @@
 {% load static %}
-
+{% load i18n %}
 <!doctype html>
 
 
@@ -58,42 +58,39 @@
             <div id="main-menu" class="main-menu collapse navbar-collapse">
                 <ul class="nav navbar-nav">
                     <li class="active">
-                        <a href="/home/"> <i class="menu-icon fa fa-dashboard"></i>Dashboard </a>
+                        <a href="/home/"> <i class="menu-icon fa fa-dashboard"></i>{% trans 'Dashboard' %}</a>
                     </li>
-                    <h3 class="menu-title">Management</h3><!-- /.menu-title -->
+                    <h3 class="menu-title">{% trans 'Management' %}</h3><!-- /.menu-title -->
                     <li class="menu-item-has-children dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="false"> <i class="menu-icon fa fa-exchange"></i>Borrow</a>
+                            aria-expanded="false"> <i class="menu-icon fa fa-exchange"></i>{% trans 'Borrow' %}</a>
                         <ul class="sub-menu children dropdown-menu">
 
 
-                            <li><i class="fa fa-eye"></i><a href="{% url 'dashboard:view_assign_asset' %}"> View
-                                    Borrowed Assets</a></li>
+                            <li><i class="fa fa-eye"></i><a href="{% url 'dashboard:view_assign_asset' %}">{% trans 'View Borrowed Assets' %}</a></li>
 
                         </ul>
                     </li>
                     </li>
-                    <h3 class="menu-title">Employees</h3><!-- /.menu-title -->
+                    <h3 class="menu-title">{% trans 'Employees' %}</h3><!-- /.menu-title -->
                     <li class="menu-item-has-children dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="false"> <i class="menu-icon fa fa-group"></i>Employee</a>
+                            aria-expanded="false"> <i class="menu-icon fa fa-group"></i>{% trans 'Employees' %}</a>
                         <ul class="sub-menu children dropdown-menu">
 
-                            <li><i class="fa  fa-eye"></i><a href="{% url 'dashboard:view_employee' %}">View
-                                    Employee</a></li>
-                            <li><i class="fa  fa-eye"></i><a href="{% url 'dashboard:view_designation' %}">View
-                                    Designation</a></li>
+                            <li><i class="fa  fa-eye"></i><a href="{% url 'dashboard:view_employee' %}">{% trans 'View Employee' %}</a></li>
+                            <li><i class="fa  fa-eye"></i><a href="{% url 'dashboard:view_designation' %}">{% trans 'View Designation' %}</a></li>
 
                         </ul>
                     </li>
-                    <h3 class="menu-title">Assets</h3><!-- /.menu-title -->
+                    <h3 class="menu-title">{% trans 'Asset' %}</h3><!-- /.menu-title -->
                     <li class="menu-item-has-children dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="false"> <i class="menu-icon fa fa-th-large"></i>Asset</a>
+                            aria-expanded="false"> <i class="menu-icon fa fa-th-large"></i>{% trans 'Asset' %}</a>
                         <ul class="sub-menu children dropdown-menu">
 
-                            <li><i class="fa fa-eye"></i><a href="{% url 'dashboard:view_asset' %}">View Asset</a></li>
-                            <li><i class="fa fa-eye"></i><a href="{% url 'dashboard:view_category' %}">View Category</a>
+                            <li><i class="fa fa-eye"></i><a href="{% url 'dashboard:view_asset' %}">{% trans 'View Asset' %}</a></li>
+                            <li><i class="fa fa-eye"></i><a href="{% url 'dashboard:view_category' %}">{% trans 'View Category' %}</a>
                             </li>
 
                         </ul>

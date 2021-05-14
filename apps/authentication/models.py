@@ -15,6 +15,7 @@ class Profile(models.Model):
     update_on = models.DateTimeField(auto_now=True,null=True,blank=True)
     upgraded_on = models.DateTimeField(null=True,blank=True)
     upgraded = models.BooleanField(default=False)
+    language_code=models.CharField(max_length=50,default="en")
 
 
     def __str__(self):

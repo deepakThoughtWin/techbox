@@ -1,3 +1,4 @@
+from django.http.response import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect, reverse
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
@@ -5,7 +6,8 @@ from django.contrib.auth.decorators import login_required
 from django.views import View
 from .forms import UserUpdateForm,ProfileUpdateForm
 from django.contrib import messages
-
+from django.conf import settings # new
+from django.utils import translation
  
 # Views
 class Registration(View):
@@ -35,6 +37,9 @@ class ProfileView(View):
             u_form.save()
             p_form.save()
             messages.success(request,'Your Profile has been updated!')
+            translation.activate(request.user.profile.language_code )
+            response= HttpResponse('profile')
+            response.set_cookie(settings.LANGUAGE_COOKIE_NAME, request.user.profile.language_code)
             return redirect('profile')
     def get(self,request):
         p_form = ProfileUpdateForm(instance=request.user.profile)
